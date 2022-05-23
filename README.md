@@ -26,6 +26,6 @@ Simple fullstack webpage created with Symfony and React.
 
 1.  [Symfony](https://symfony.com/)
 2.  [PHP](https://www.php.net/)
-3.  [React](https://react.org)
+3.  [React](https://reactjs.org)
 4.  [MySQL](https://www.mysql.com)
 5.  [SymfonyMAMP](https://github.com/kalwar/Symfony-MAMP)
