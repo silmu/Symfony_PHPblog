@@ -3,12 +3,10 @@ import { Link } from 'react-router-dom';
 
 const Header = () => {
   return (
-    <header>
-      <nav>
-        <Link to="/">My Blog</Link>
-        <Link to="login">Login</Link>
-      </nav>
-    </header>
+    <nav>
+      <Link to="/">My Blog</Link>
+      <Link to="login">Login</Link>
+    </nav>
   );
 };
 export default Header;
