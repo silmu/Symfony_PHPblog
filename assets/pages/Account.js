@@ -4,7 +4,7 @@ import Post from '../components/Post';
 const Account = () => {
   return (
     <div>
-      <h1 id="welcome">Welcome back!</h1>
+      <h1 className="text-center">Welcome back!</h1>
       <form id="newpost" method="post" className="p-3 m-3 bg-white rounded">
         <label htmlFor="title"></label>
         <input
@@ -12,9 +12,9 @@ const Account = () => {
           type="text"
           name="title"
           placeholder="Title"
-          className="form-control"
+          className="form-control mb-3"
         ></input>
-        <textarea className="form-control" name="content"></textarea>
+        <textarea className="form-control mb-1" name="content"></textarea>
         <div>
           <input
             type="submit"
