@@ -2,8 +2,12 @@ import React from 'react';
 
 const Login = () => {
   return (
-    <div className="form-container">
-      <form method="post" action="/login_check">
+    <div className="container">
+      <form
+        method="post"
+        action="/login_check"
+        className="p-3 m-3 bg-white rounded"
+      >
         <h1>Login</h1>
         <div className="form-group">
           <label htmlFor="username"></label>
@@ -13,6 +17,7 @@ const Login = () => {
             id="username"
             placeholder="Username"
             autoComplete="username"
+            className="form-control"
             required
           ></input>
         </div>
@@ -24,6 +29,7 @@ const Login = () => {
             id="password"
             placeholder="Password"
             autoComplete="current-password"
+            className="form-control"
             required
           ></input>
         </div>
@@ -31,14 +37,18 @@ const Login = () => {
           type="submit"
           name="submit"
           value="Submit"
-          className="btn-primary"
+          className="btn btn-dark"
         />
       </form>
       {/* Register */}
       <div className="register">
-        <h2>Register</h2>
         <div className="register-form">
-          <form method="post" action="/register">
+          <form
+            method="post"
+            action="/register"
+            className="p-3 m-3 bg-white rounded"
+          >
+            <h2>Register</h2>
             <div className="form-group">
               <label htmlFor="reg_username"></label>
               <input
@@ -47,6 +57,7 @@ const Login = () => {
                 id="reg_username"
                 placeholder="Username"
                 autoComplete="username"
+                className="form-control"
                 required
               ></input>
             </div>
@@ -58,6 +69,7 @@ const Login = () => {
                 id="reg_password"
                 placeholder="Password"
                 autoComplete="new-password"
+                className="form-control"
                 required
               ></input>
             </div>
@@ -65,7 +77,7 @@ const Login = () => {
               type="submit"
               name="register"
               value="Submit"
-              className="btn-primary"
+              className="btn btn-dark"
             />
           </form>
         </div>

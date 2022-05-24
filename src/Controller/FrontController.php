@@ -11,6 +11,6 @@ class FrontController extends AbstractController
     #[Route('/{reactRoute}', name: 'app_home', requirements:['reactRoute'=>"^(?!api).+"], defaults:["reactRoute"=>null])]
     public function index(): Response
     {
-        return $this->render('main/index.html.twig');
+        return $this->render('main/index.html.twig', ['title' => 'My Blog']);
     }
 }
