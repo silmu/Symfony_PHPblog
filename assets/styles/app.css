@@ -30,6 +30,12 @@ h2 {
   font-weight: 800 !important;
 }
 
+h4 {
+  color: gray;
+  font-size: 0.8rem !important;
+  text-align: end;
+}
+
 /* main {
   background: linear-gradient(white, transparent);
   backdrop-filter: blur(3px);

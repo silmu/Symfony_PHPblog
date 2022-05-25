@@ -1,7 +1,24 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Post from '../components/Post';
+import axios from 'axios';
 
 const Account = () => {
+  const [posts, setPosts] = useState([]);
+
+  useEffect(() => {
+    fetchPosts();
+  }, []);
+
+  const fetchPosts = () => {
+    axios
+      .get('/api/account')
+      .then((response) => {
+        setPosts(response.data);
+      })
+      .catch((error) => {
+        console.log('Axios error: ', error);
+      });
+  };
   return (
     <div>
       <h1 className="text-center">Welcome back!</h1>
@@ -51,7 +68,9 @@ const Account = () => {
           </div>
         </div>
       </form>
-      <Post />
+      {posts.map((post, key) => {
+        return <Post {...post} key={key} />;
+      })}
     </div>
   );
 };

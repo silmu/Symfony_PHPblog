@@ -1,13 +1,20 @@
 import React from 'react';
 
-const Post = () => {
+const Post = (props) => {
+  const { id, user_id, title, created_at, content } = props;
+
+  let date = created_at.date.slice(0, 16);
   return (
     <div>
       <form method="post" className="p-3 m-3 bg-white rounded">
         <input type="hidden" name="id"></input>
-        <h3>Title</h3>
-        <h4 name="timestamp">Timestamp</h4>
-        <textarea className="form-control-plaintext" name="content"></textarea>
+        <h3>{title}</h3>
+        <h4 name="timestamp">{date}</h4>
+        <textarea
+          className="form-control-plaintext"
+          name="content"
+          defaultValue={content}
+        ></textarea>
         <div>
           <input
             type="submit"
