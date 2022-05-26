@@ -25,6 +25,9 @@ class Posts
     #[ORM\Column(type: 'text')]
     private $content;
 
+    #[ORM\Column(type: 'text')]
+    private $image;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -59,9 +62,11 @@ class Posts
         return $this->created_at;
     }
 
-    public function setCreatedAt(\DateTimeImmutable $created_at): self
+    public function setCreatedAt(): self
     {
-        $this->created_at = $created_at;
+        
+        $today = new \DateTimeImmutable('now');
+        $this->created_at = $today;
 
         return $this;
     }
@@ -74,6 +79,18 @@ class Posts
     public function setContent(string $content): self
     {
         $this->content = $content;
+
+        return $this;
+    }
+
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function setImage(string $image): self
+    {
+        $this->image = $image;
 
         return $this;
     }
