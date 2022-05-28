@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Swal from 'sweetalert2';
@@ -9,7 +9,17 @@ const Login = () => {
   const [loginMsg, setLoginMsg] = useState('');
   const navigate = useNavigate();
 
-  //Check if usernmae and password are correct
+  useEffect(() => {
+    console.log('Login: Logged in: ', sessionStorage.getItem('logged_in'));
+  }, []);
+
+  //If logged in set session to true
+  const toggleLogin = (status) => {
+    window.sessionStorage.setItem('logged_in', status);
+    console.log('Login: Logged in: ', sessionStorage.getItem('logged_in'));
+  };
+
+  //Check if username and password are correct
   const handleLoginCheck = (e) => {
     e.preventDefault();
     let formData = new FormData();
@@ -27,6 +37,7 @@ const Login = () => {
           timer: 1500,
         });
         //If login is successful redirect to account
+        toggleLogin(true);
         navigate('/account');
       })
       .catch((err) => {
@@ -36,6 +47,7 @@ const Login = () => {
           showConfirmButton: false,
           timer: 1500,
         });
+        toggleLogin(false);
         setLoginMsg(err?.response?.data);
       });
   };

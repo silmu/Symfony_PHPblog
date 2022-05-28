@@ -1,7 +1,21 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 const Header = () => {
+  const [loggedIn, setLoggedIn] = useState('');
+
+  useEffect(() => {
+    setLoggedIn(sessionStorage.getItem('logged_in'));
+  }, []);
+
+  const toggleLogin = () => {
+    setLoggedIn(sessionStorage.getItem('logged_in'));
+    if (loggedIn) {
+      window.sessionStorage.setItem('logged_in', 'false');
+      setLoggedIn('false');
+    }
+  };
+
   return (
     <div>
       <nav
@@ -14,8 +28,8 @@ const Header = () => {
         <Link to="account" className="nav-link link-light">
           My account
         </Link>
-        <Link to="login" className="nav-link link-light">
-          Login
+        <Link to="login" className="nav-link link-light" onClick={toggleLogin}>
+          {loggedIn == 'true' ? 'Logout' : 'Login'}
         </Link>
       </nav>
     </div>

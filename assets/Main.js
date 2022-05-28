@@ -18,8 +18,8 @@ const Main = () => {
         <Routes>
           <Route path="/" element={<Homepage />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/logout" element={<Login />} />
           <Route path="/account" element={<Account />} />
-          {/* <Route path="/redirect" element={<Navigate to="/account" />} /> */}
         </Routes>
       </Layout>
     </Router>

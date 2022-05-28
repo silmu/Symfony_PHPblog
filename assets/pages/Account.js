@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Post from '../components/Post';
 import Swal from 'sweetalert2';
 import axios from 'axios';
@@ -10,8 +11,17 @@ const Account = () => {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [imageSrc, setImageSrc] = useState('');
+  const [loggedIn, setLoggedIn] = useState(sessionStorage.getItem('logged_in'));
+  const navigate = useNavigate();
 
   useEffect(() => {
+    setLoggedIn(sessionStorage.getItem('logged_in'));
+    if (sessionStorage.getItem('logged_in') == 'false') {
+      navigate('/login');
+      console.log('Account trying to redirect');
+    }
+    //Check if logged in
+    console.log('Account: Logged in:', sessionStorage.getItem('logged_in'));
     fetchPosts();
   }, []);
 
