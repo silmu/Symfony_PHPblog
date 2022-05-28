@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Posts;
+use App\Entity\Users;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -84,5 +85,30 @@ class BackendController extends AbstractController
         $em->flush();
 
         return $this->json('Deleted a post successfully with id ' . $id);
+    }
+
+    #[Route('/login_check', name: 'login_check', methods:['POST'])]
+    public function login(Request $request, ManagerRegistry $doctrine): Response
+    {
+        $em = $doctrine->getManager();
+        //Get username and password input
+        $username = ($request->request->get('username'));
+        $password = ($request->request->get('password'));
+        //Get all users from the database
+        $users = $em->getRepository(Users::class)->findAll();
+        foreach($users as $user){
+            //Find matching username by username
+            if($user->getUsername() == $username){
+                //Get password of the matched username
+                if($user->getPassword() == $password){
+                    return $this->json('Logged in successfully');
+                } else {
+                    return $this->json('Password is incorrect', 403);
+                }
+            } else {
+                return $this->json('No username found', 404);
+            }
+        }
+        
     }
 }

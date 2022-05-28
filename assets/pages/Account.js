@@ -84,7 +84,7 @@ const Account = () => {
             }}
             placeholder="Title"
             className="form-control mb-3 card-title"
-            required="required"
+            required
           ></input>
           <textarea
             className="form-control mb-1 card-text"
@@ -93,7 +93,7 @@ const Account = () => {
               setContent(e.target.value);
             }}
             placeholder="Share your thoughts here..."
-            required="required"
+            required
           ></textarea>
           {/*........ Image as a link ...........*/}
           <div>

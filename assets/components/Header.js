@@ -11,11 +11,11 @@ const Header = () => {
         <Link to="/" className="navbar-brand">
           BlogBook
         </Link>
-        <Link to="login" className="nav-link link-light">
-          Login
-        </Link>
         <Link to="account" className="nav-link link-light">
           My account
+        </Link>
+        <Link to="login" className="nav-link link-light">
+          Login
         </Link>
       </nav>
     </div>

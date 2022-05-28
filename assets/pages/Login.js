@@ -1,13 +1,53 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import Swal from 'sweetalert2';
 
 const Login = () => {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [loginMsg, setLoginMsg] = useState('');
+  const navigate = useNavigate();
+
+  //Check if usernmae and password are correct
+  const handleLoginCheck = (e) => {
+    e.preventDefault();
+    let formData = new FormData();
+    formData.append('username', username);
+    formData.append('password', password);
+
+    axios
+      .post('/api/login_check', formData)
+      .then((res) => {
+        setLoginMsg(res.data);
+        Swal.fire({
+          icon: 'success',
+          title: 'Logged in successfully',
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        //If login is successful redirect to account
+        navigate('/account');
+      })
+      .catch((err) => {
+        Swal.fire({
+          icon: 'error',
+          title: err?.response?.data,
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        setLoginMsg(err?.response?.data);
+      });
+  };
+
+  const handleRegistry = (e) => {
+    e.preventDefault();
+    console.log('Registry check');
+  };
+
   return (
     <div className="container">
-      <form
-        method="post"
-        action="/login_check"
-        className="p-3 m-3 bg-white rounded"
-      >
+      <form method="post" className="p-3 m-3 bg-white rounded">
         <h1>Login</h1>
         <div className="form-group">
           <label htmlFor="username"></label>
@@ -18,6 +58,9 @@ const Login = () => {
             placeholder="Username"
             autoComplete="username"
             className="form-control"
+            onChange={(e) => {
+              setUsername(e.target.value);
+            }}
             required
           ></input>
         </div>
@@ -30,24 +73,28 @@ const Login = () => {
             placeholder="Password"
             autoComplete="current-password"
             className="form-control"
+            onChange={(e) => {
+              setPassword(e.target.value);
+            }}
             required
           ></input>
         </div>
-        <input
+        <button
           type="submit"
           name="submit"
           value="Submit"
+          onClick={(e) => handleLoginCheck(e)}
           className="btn btn-dark"
-        />
+        >
+          Submit
+        </button>
+        {/* Login error or success message */}
+        <div>{loginMsg}</div>
       </form>
       {/* Register */}
       <div className="register">
         <div className="register-form">
-          <form
-            method="post"
-            action="/register"
-            className="p-3 m-3 bg-white rounded"
-          >
+          <form method="post" className="p-3 m-3 bg-white rounded">
             <h2>Register</h2>
             <div className="form-group">
               <label htmlFor="reg_username"></label>
@@ -78,6 +125,7 @@ const Login = () => {
               name="register"
               value="Submit"
               className="btn btn-dark"
+              onClick={(e) => handleRegistry(e)}
             />
           </form>
         </div>

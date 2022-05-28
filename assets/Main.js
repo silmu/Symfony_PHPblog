@@ -1,6 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Navigate,
+  Routes,
+  Route,
+} from 'react-router-dom';
 import Layout from './components/Layout';
 import Homepage from './pages/Homepage';
 import Login from './pages/Login';
@@ -14,6 +19,7 @@ const Main = () => {
           <Route path="/" element={<Homepage />} />
           <Route path="/login" element={<Login />} />
           <Route path="/account" element={<Account />} />
+          {/* <Route path="/redirect" element={<Navigate to="/account" />} /> */}
         </Routes>
       </Layout>
     </Router>
