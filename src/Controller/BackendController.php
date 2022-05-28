@@ -25,6 +25,7 @@ class BackendController extends AbstractController
                 'title' => $post->getTitle(),
                 'created_at' => $post->getCreatedAt(),
                 'content' => $post->getContent(),
+                'image' => $post->getImage(),
             ];
         }
         return $this->json($data);
@@ -39,6 +40,7 @@ class BackendController extends AbstractController
         $newPost->setTitle($request->request->get('title'));
         $newPost->setContent($request->request->get('content'));
         $newPost->setCreatedAt($newPost->getCreatedAt());
+        $newPost->setImage($request->request->get('image'));
         $em->persist($newPost);
         $em->flush();
 

@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import Swal from 'sweetalert2';
 import axios from 'axios';
 
-const Post = ({ id, user_id, title, created_at, content, reload }) => {
+const Post = (props) => {
+  const { id, user_id, title, created_at, content, image, reload } = props;
   let dateCropped = created_at.date.slice(0, 16);
   const [isSaving, setIsSaving] = useState(false);
   const [titleUpd, setTitleUpd] = useState(title);
@@ -78,37 +79,40 @@ const Post = ({ id, user_id, title, created_at, content, reload }) => {
 
   return (
     <div>
-      <form method="post" className="p-3 m-3 bg-white rounded">
-        <input type="hidden" name="id"></input>
-        <h3>{title}</h3>
-        <h4 name="timestamp">{dateCropped}</h4>
-        <textarea
-          className="form-control-plaintext"
-          name="content"
-          defaultValue={content}
-          onChange={(e) => {
-            setContentUpd(e.target.value);
-          }}
-        ></textarea>
-        <div>
-          <input
-            disabled={isSaving}
-            type="button"
-            value="Update"
-            onClick={handleUpdate}
-            className="btn btn-dark"
-          ></input>
-          <input
-            type="button"
-            value="Delete"
-            onClick={handleDelete}
-            className="btn btn-outline-dark"
-          ></input>
-          <input
-            type="reset"
-            value="Cancel"
-            className="btn btn-outline-dark"
-          ></input>
+      <form className="p-3 mx-auto bg-white rounded card">
+        {/* <input type="hidden" name="id"></input> */}
+        <img src={image} className="p-3 card-img-top" />
+        <div className="card-body">
+          <h3 className="card-title">{title}</h3>
+          <h4 name="timestamp">{dateCropped}</h4>
+          <textarea
+            className="form-control-plaintext card-text"
+            name="content"
+            defaultValue={content}
+            onChange={(e) => {
+              setContentUpd(e.target.value);
+            }}
+          ></textarea>
+          <div>
+            <input
+              disabled={isSaving}
+              type="button"
+              value="Update"
+              onClick={handleUpdate}
+              className="btn btn-dark"
+            ></input>
+            <input
+              type="button"
+              value="Delete"
+              onClick={handleDelete}
+              className="btn btn-outline-dark"
+            ></input>
+            <input
+              type="reset"
+              value="Cancel"
+              className="btn btn-outline-dark"
+            ></input>
+          </div>
         </div>
       </form>
     </div>

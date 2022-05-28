@@ -14,6 +14,9 @@ const Header = () => {
         <Link to="login" className="nav-link link-light">
           Login
         </Link>
+        <Link to="account" className="nav-link link-light">
+          My account
+        </Link>
       </nav>
     </div>
   );

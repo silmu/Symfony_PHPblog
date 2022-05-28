@@ -15,6 +15,11 @@ body {
   width: 100%;
 }
 
+form {
+  max-width: 600px;
+  align-items: middle;
+}
+
 .btn {
   margin-right: 0.5rem;
   margin-top: 0.5rem;

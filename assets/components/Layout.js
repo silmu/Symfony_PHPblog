@@ -3,7 +3,7 @@ import Header from './Header';
 
 const Layout = ({ children }) => {
   return (
-    <div className="container">
+    <div className="container align-items-center">
       <Header />
       <main>{children}</main>
     </div>

@@ -9,7 +9,7 @@ const Account = () => {
   const [user_id, setUserId] = useState('');
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
-  const [imageSrc, setImageSrc] = useState({});
+  const [imageSrc, setImageSrc] = useState('');
 
   useEffect(() => {
     fetchPosts();
@@ -35,6 +35,7 @@ const Account = () => {
     formData.append('user_id', user_id);
     formData.append('title', title);
     formData.append('content', content);
+    formData.append('image', imageSrc);
     axios
       .post('/api/account', formData)
       .then((response) => {
@@ -63,67 +64,69 @@ const Account = () => {
   return (
     <div>
       <h1 className="text-center">Welcome back!</h1>
-      <form id="newpost" className="p-3 m-3 bg-white rounded">
-        <label htmlFor="title"></label>
-        <input
-          id="title"
-          type="text"
-          name="title"
-          onChange={(e) => {
-            setTitle(e.target.value);
-          }}
-          placeholder="Title"
-          className="form-control mb-3"
-        ></input>
-        <textarea
-          className="form-control mb-1"
-          name="content"
-          onChange={(e) => {
-            setContent(e.target.value);
-          }}
-        ></textarea>
-        <div>
-          <button
-            disabled={isSaving}
-            onClick={handlePost}
-            name="addpost"
-            className="btn btn-dark"
-          >
-            Add
-          </button>
-          <button className="btn btn-outline-dark" id="canceladd">
-            Cancel
-          </button>
-          {/*......... File input ..........*/}
-          <div className="input-group mb-3 border rounded">
-            <div className="input-group-prepend">
-              <span className="input-group-text">Upload</span>
-            </div>
-            <div className="custom-file">
-              <input
-                type="file"
-                className="custom-file-input"
-                id="inputGroupFile01"
-                accept="image/png, image/jpeg"
-                name="postImage"
-                onChange={(e) => {
-                  setImageSrc(URL.createObjectURL(e.target.files[0]));
-                  console.log(URL.createObjectURL(e.target.files[0]));
-                }}
-                // hidden
-              ></input>
-              <label
-                className="custom-file-label p-2"
-                htmlFor="inputGroupFile01"
-              >
-                Choose file
-              </label>
-            </div>
-            {/*...................*/}
+      <form id="newpost" className="p-3 mx-auto bg-white rounded card">
+        <img
+          src={
+            imageSrc
+              ? imageSrc
+              : 'https://images.unsplash.com/photo-1500989145603-8e7ef71d639e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2352&q=80'
+          }
+          className="p-3 card-img-top"
+        />
+        <div className="card-body">
+          <label htmlFor="title"></label>
+          <input
+            id="title"
+            type="text"
+            name="title"
+            onChange={(e) => {
+              setTitle(e.target.value);
+            }}
+            placeholder="Title"
+            className="form-control mb-3 card-title"
+            required="required"
+          ></input>
+          <textarea
+            className="form-control mb-1 card-text"
+            name="content"
+            onChange={(e) => {
+              setContent(e.target.value);
+            }}
+            placeholder="Share your thoughts here..."
+            required="required"
+          ></textarea>
+          {/*........ Image as a link ...........*/}
+          <div>
+            <label htmlFor="imageInput">Add a link to an image:</label>
+            <input
+              type="text"
+              className="form-control p-2"
+              name="imageInput"
+              onChange={(e) => {
+                setImageSrc(e.target.value);
+              }}
+            ></input>
+          </div>
+          {/*........ Buttons ...........*/}
+          <div>
+            <input
+              type="submit"
+              disabled={isSaving}
+              onClick={handlePost}
+              name="addpost"
+              className="btn btn-dark"
+              value="Add a new post"
+            />
+            <button
+              type="reset"
+              className="btn btn-outline-dark"
+              id="canceladd"
+            >
+              Cancel
+            </button>
           </div>
         </div>
       </form>
-      <img src={imageSrc} style={{ width: 100 }} />
       {posts.map((post, key) => {
         return <Post {...post} key={key} reload={fetchPosts} />;
       })}
