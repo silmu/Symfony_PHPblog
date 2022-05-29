@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import Post from '../components/Post';
 import Swal from 'sweetalert2';
 import axios from 'axios';
 
 const Account = () => {
+  const [username, setUsername] = useState(useParams().username);
   const [posts, setPosts] = useState([]);
   const [isSaving, setIsSaving] = useState(false);
-  const [user_id, setUserId] = useState('');
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [imageSrc, setImageSrc] = useState('');
@@ -27,7 +27,7 @@ const Account = () => {
 
   const fetchPosts = () => {
     axios
-      .get('/api/account')
+      .get(`/api/account/${username}`)
       .then((response) => {
         console.log(response.data);
         setPosts(response.data);
@@ -38,18 +38,16 @@ const Account = () => {
   };
 
   const handlePost = () => {
-    console.log('Posting');
     setIsSaving(true);
     let formData = new FormData();
-    setUserId(1);
-    formData.append('user_id', user_id);
+
+    formData.append('user_id', posts[0].user_id);
     formData.append('title', title);
     formData.append('content', content);
     formData.append('image', imageSrc);
     axios
       .post('/api/account', formData)
       .then((response) => {
-        console.log('Post success: ', response);
         Swal.fire({
           icon: 'success',
           title: 'Post created successfully',
@@ -57,6 +55,11 @@ const Account = () => {
           timer: 1500,
         });
         setIsSaving(false);
+        //Clear data
+        setTitle('');
+        setContent('');
+        setImageSrc('');
+        //Rerender posts list
         fetchPosts();
       })
       .catch((error) => {
@@ -73,7 +76,7 @@ const Account = () => {
 
   return (
     <div>
-      <h1 className="text-center">Welcome back!</h1>
+      <h1 className="text-center">Welcome back, {username}!</h1>
       <form id="newpost" className="p-3 mx-auto bg-white rounded card">
         <img
           src={

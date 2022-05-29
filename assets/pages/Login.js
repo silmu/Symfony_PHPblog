@@ -38,7 +38,7 @@ const Login = () => {
         });
         //If login is successful redirect to account
         toggleLogin(true);
-        navigate('/account');
+        navigate(`/account/${username}`);
       })
       .catch((err) => {
         Swal.fire({
@@ -59,7 +59,7 @@ const Login = () => {
 
   return (
     <div className="container">
-      <form method="post" className="p-3 m-3 bg-white rounded">
+      <form method="post" className="p-3 mx-auto bg-white rounded">
         <h1>Login</h1>
         <div className="form-group">
           <label htmlFor="username"></label>
@@ -106,7 +106,7 @@ const Login = () => {
       {/* Register */}
       <div className="register">
         <div className="register-form">
-          <form method="post" className="p-3 m-3 bg-white rounded">
+          <form method="post" className="p-3 mx-auto bg-white rounded">
             <h2>Register</h2>
             <div className="form-group">
               <label htmlFor="reg_username"></label>

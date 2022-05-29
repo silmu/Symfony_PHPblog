@@ -10,7 +10,7 @@ const Header = () => {
 
   const toggleLogin = () => {
     setLoggedIn(sessionStorage.getItem('logged_in'));
-    if (loggedIn) {
+    if (loggedIn == 'true') {
       window.sessionStorage.setItem('logged_in', 'false');
       setLoggedIn('false');
     }
@@ -25,9 +25,9 @@ const Header = () => {
         <Link to="/" className="navbar-brand">
           BlogBook
         </Link>
-        <Link to="account" className="nav-link link-light">
+        {/* <Link to="account" className="nav-link link-light">
           My account
-        </Link>
+        </Link> */}
         <Link to="login" className="nav-link link-light" onClick={toggleLogin}>
           {loggedIn == 'true' ? 'Logout' : 'Login'}
         </Link>

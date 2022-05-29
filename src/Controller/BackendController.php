@@ -14,20 +14,30 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/api', name: 'api_main')]
 class BackendController extends AbstractController
 {
-    #[Route('/account', name: 'app_account', methods:['GET'])]
-    public function index(EntityManagerInterface $em): Response
+    #[Route('/account/{username}', name: 'app_account', methods:['GET'])]
+    public function index(string $username, EntityManagerInterface $em): Response
     {
+        $users = $em->getRepository(Users::class)->findAll();
+        $id = '';
+        foreach($users as $user){
+            if($user->getUsername() == $username){
+                $id = $user->getId();
+            } 
+        }
         $posts = $em->getRepository(Posts::class)->findAll();
-        $data = [];
+        $data[] = ['user_id' => $id];
         foreach($posts as $post){
-            $data[] = [
-                'id' => $post->getId(),
-                'user_id' => $post->getUserId(),
-                'title' => $post->getTitle(),
-                'created_at' => $post->getCreatedAt(),
-                'content' => $post->getContent(),
-                'image' => $post->getImage(),
-            ];
+            if($post->getUserId() == $id){
+                $data[] = [
+                    'id' => $post->getId(),
+                    'user_id' => $post->getUserId(),
+                    'title' => $post->getTitle(),
+                    'created_at' => $post->getCreatedAt(),
+                    'content' => $post->getContent(),
+                    'image' => $post->getImage(),
+                ];
+            }
+            
         }
         return $this->json($data);
     }

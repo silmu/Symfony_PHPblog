@@ -19,7 +19,7 @@ const Main = () => {
           <Route path="/" element={<Homepage />} />
           <Route path="/login" element={<Login />} />
           <Route path="/logout" element={<Login />} />
-          <Route path="/account" element={<Account />} />
+          <Route path="/account/:username" element={<Account />} />
         </Routes>
       </Layout>
     </Router>

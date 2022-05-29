@@ -4,16 +4,15 @@ import axios from 'axios';
 
 const Post = (props) => {
   const { id, user_id, title, created_at, content, image, reload } = props;
-  let dateCropped = created_at.date.slice(0, 16);
+  let dateCropped = created_at?.date?.slice(0, 16);
   const [isSaving, setIsSaving] = useState(false);
-  const [titleUpd, setTitleUpd] = useState(title);
   const [contentUpd, setContentUpd] = useState('');
 
   const handleUpdate = (e) => {
     setIsSaving(true);
     axios
       .patch(`/api/account/${id}`, {
-        title: titleUpd,
+        title: title,
         content: contentUpd,
       })
       .then((res) => {
@@ -40,7 +39,6 @@ const Post = (props) => {
   };
 
   const handleDelete = () => {
-    console.log('Delete clicked');
     //Sweet alert warning message before delete
     Swal.fire({
       title: 'Are you sure?',
@@ -79,8 +77,13 @@ const Post = (props) => {
 
   return (
     <div>
-      <form className="p-3 mx-auto bg-white rounded card">
-        {/* <input type="hidden" name="id"></input> */}
+      <form
+        // Hide a post if it's emoty.
+        //Empty post is returned as a response to empty fetch all posts result and carries a user_id
+        className={`p-3 mx-auto bg-white rounded card ${
+          id == undefined ? 'hidden' : ''
+        }`}
+      >
         <img src={image} className="p-3 card-img-top" />
         <div className="card-body">
           <h3 className="card-title">{title}</h3>
