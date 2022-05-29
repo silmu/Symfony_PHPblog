@@ -121,4 +121,33 @@ class BackendController extends AbstractController
         return $this->json("No username found", 404);
         
     }
+
+    #[Route('/register', name:'register', methods:['POST'])]
+    public function register(Request $request, ManagerRegistry $doctrine): Response
+    {
+        $em = $doctrine->getManager();
+        //Get username and password input
+        $username = ($request->request->get('username'));
+        $password = ($request->request->get('password'));
+        //Get all users from the database
+        $users = $em->getRepository(Users::class)->findAll();
+        foreach($users as $user){
+            //Find if username already exists
+            if($user->getUsername() == $username){
+                return $this->json('Username already exists', 403);
+            }
+        }
+        //Create new user
+        $newUser = new Users();
+        $newUser->setUsername(trim($request->request->get('username')));
+        //Password encryption
+        $regpassword = (trim($request->request->get('password')));
+        $regpassword = password_hash($regpassword, PASSWORD_BCRYPT);
+
+        $newUser->setPassword($regpassword);
+        $em->persist($newUser);
+        $em->flush();
+
+        return $this->json('Created new user successfully with id ' .$newUser->getId());
+    }
 }

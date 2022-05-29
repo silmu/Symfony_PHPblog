@@ -6,6 +6,8 @@ import Swal from 'sweetalert2';
 const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [usernameReg, setUsernameReg] = useState('');
+  const [passwordReg, setPasswordReg] = useState('');
   const [loginMsg, setLoginMsg] = useState('');
   const navigate = useNavigate();
 
@@ -55,6 +57,32 @@ const Login = () => {
   const handleRegistry = (e) => {
     e.preventDefault();
     console.log('Registry check');
+    let formData = new FormData();
+    formData.append('username', usernameReg);
+    formData.append('password', passwordReg);
+    axios
+      .post('/api/register', formData)
+      .then((res) => {
+        Swal.fire({
+          icon: 'success',
+          title: 'Registered successfully',
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        console.log(res.data);
+        toggleLogin(true);
+        navigate(`/account/${usernameReg}`);
+      })
+      .catch((err) => {
+        Swal.fire({
+          icon: 'error',
+          title: err?.response?.data,
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        console.log(err.data);
+        toggleLogin(false);
+      });
   };
 
   return (
@@ -117,6 +145,9 @@ const Login = () => {
                 placeholder="Username"
                 autoComplete="username"
                 className="form-control"
+                onChange={(e) => {
+                  setUsernameReg(e.target.value);
+                }}
                 required
               ></input>
             </div>
@@ -129,6 +160,9 @@ const Login = () => {
                 placeholder="Password"
                 autoComplete="new-password"
                 className="form-control"
+                onChange={(e) => {
+                  setPasswordReg(e.target.value);
+                }}
                 required
               ></input>
             </div>
