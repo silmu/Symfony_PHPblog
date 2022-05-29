@@ -105,10 +105,10 @@ class BackendController extends AbstractController
                 } else {
                     return $this->json('Password is incorrect', 403);
                 }
-            } else {
-                return $this->json('No username found', 404);
-            }
+            } 
+            
         }
+        return $this->json("No username found", 404);
         
     }
 }
