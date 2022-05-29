@@ -28,6 +28,9 @@ class Posts
     #[ORM\Column(type: 'text')]
     private $image;
 
+    #[ORM\Column(type: 'smallint')]
+    private $public_post;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -91,6 +94,18 @@ class Posts
     public function setImage(string $image): self
     {
         $this->image = $image;
+
+        return $this;
+    }
+
+    public function getPublicPost(): ?int
+    {
+        return $this->public_post;
+    }
+
+    public function setPublicPost(string $public_post): self
+    {
+        $this->public_post = $public_post;
 
         return $this;
     }

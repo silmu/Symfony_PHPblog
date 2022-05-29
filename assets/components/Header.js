@@ -25,9 +25,9 @@ const Header = () => {
         <Link to="/" className="navbar-brand">
           BlogBook
         </Link>
-        {/* <Link to="account" className="nav-link link-light">
+        <Link to="account" className="nav-link link-light">
           My account
-        </Link> */}
+        </Link>
         <Link to="login" className="nav-link link-light" onClick={toggleLogin}>
           {loggedIn == 'true' ? 'Logout' : 'Login'}
         </Link>

@@ -14,6 +14,30 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/api', name: 'api_main')]
 class BackendController extends AbstractController
 {
+
+    #[Route('/', name: 'app_homepage', methods:['GET'])]
+    public function homepage( EntityManagerInterface $em): Response
+    {
+        $posts = $em->getRepository(Posts::class)->findBy(['public_post' => 1],['id' => 'DESC']);
+        $data[] = [];
+        foreach($posts as $post){
+            $user = $em->getRepository(Users::class)->findOneBy(['id' => $post->getUserId()]);
+            $username = $user->getUsername();
+
+            $data[] = [
+                'id' => $post->getId(),
+                'user_id' => $post->getUserId(),
+                'username' => $username,
+                'title' => $post->getTitle(),
+                'created_at' => $post->getCreatedAt(),
+                'content' => $post->getContent(),
+                'image' => $post->getImage(),
+                'public_post' => $post->getPublicPost()
+            ];
+        }
+        return $this->json($data);
+    }
+
     #[Route('/account/{username}', name: 'app_account', methods:['GET'])]
     public function index(string $username, EntityManagerInterface $em): Response
     {
@@ -24,7 +48,7 @@ class BackendController extends AbstractController
                 $id = $user->getId();
             } 
         }
-        $posts = $em->getRepository(Posts::class)->findAll();
+        $posts = $em->getRepository(Posts::class)->findBy([],['id' => 'DESC']);
         $data[] = ['user_id' => $id];
         foreach($posts as $post){
             if($post->getUserId() == $id){
@@ -35,6 +59,7 @@ class BackendController extends AbstractController
                     'created_at' => $post->getCreatedAt(),
                     'content' => $post->getContent(),
                     'image' => $post->getImage(),
+                    'public_post' => $post->getPublicPost(),
                 ];
             }
             
@@ -52,6 +77,7 @@ class BackendController extends AbstractController
         $newPost->setContent($request->request->get('content'));
         $newPost->setCreatedAt($newPost->getCreatedAt());
         $newPost->setImage($request->request->get('image'));
+        $newPost->setPublicPost($request->request->get('public_post'));
         $em->persist($newPost);
         $em->flush();
 
@@ -110,19 +136,16 @@ class BackendController extends AbstractController
             //Find matching username by username
             if($user->getUsername() == $username){
                 //Get password of the matched username
-                //Compare passwords
+                //Verify password against saved hash
                 $hash = $user->getPassword();
-
                 if(password_verify($password, $hash)){
                     return $this->json('Logged in successfully');
                 } else {
                     return $this->json('Password is incorrect', 403);
                 }
             } 
-            
         }
         return $this->json("No username found", 404);
-        
     }
 
     #[Route('/register', name:'register', methods:['POST'])]

@@ -3,7 +3,17 @@ import Swal from 'sweetalert2';
 import axios from 'axios';
 
 const Post = (props) => {
-  const { id, user_id, title, created_at, content, image, reload } = props;
+  const {
+    id,
+    user_id,
+    username,
+    hideButtons,
+    title,
+    created_at,
+    content,
+    image,
+    reload,
+  } = props;
   let dateCropped = created_at?.date?.slice(0, 16);
   const [isSaving, setIsSaving] = useState(false);
   const [contentUpd, setContentUpd] = useState('');
@@ -89,33 +99,43 @@ const Post = (props) => {
           <h3 className="card-title">{title}</h3>
           <h4 name="timestamp">{dateCropped}</h4>
           <textarea
-            className="form-control-plaintext card-text"
+            // Text area is read only on homepage
+            readOnly={hideButtons ? 'readOnly' : ''}
+            className={`form-control-plaintext card-text ${
+              hideButtons ? 'noSelection' : ''
+            }`}
             name="content"
             defaultValue={content}
             onChange={(e) => {
               setContentUpd(e.target.value);
             }}
           ></textarea>
-          <div>
-            <input
-              disabled={isSaving}
-              type="button"
-              value="Update"
-              onClick={handleUpdate}
-              className="btn btn-dark"
-            ></input>
-            <input
-              type="button"
-              value="Delete"
-              onClick={handleDelete}
-              className="btn btn-outline-dark"
-            ></input>
-            <input
-              type="reset"
-              value="Cancel"
-              className="btn btn-outline-dark"
-            ></input>
-          </div>
+          <div className="author">Post created by {username}</div>
+          {/* Buttons are hidden on homepage */}
+          {hideButtons ? (
+            ''
+          ) : (
+            <div>
+              <input
+                disabled={isSaving}
+                type="button"
+                value="Update"
+                onClick={handleUpdate}
+                className="btn btn-dark"
+              ></input>
+              <input
+                type="button"
+                value="Delete"
+                onClick={handleDelete}
+                className="btn btn-outline-dark"
+              ></input>
+              <input
+                type="reset"
+                value="Cancel"
+                className="btn btn-outline-dark"
+              ></input>
+            </div>
+          )}
         </div>
       </form>
     </div>

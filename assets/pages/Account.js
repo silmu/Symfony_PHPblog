@@ -12,7 +12,13 @@ const Account = () => {
   const [content, setContent] = useState('');
   const [imageSrc, setImageSrc] = useState('');
   const [loggedIn, setLoggedIn] = useState(sessionStorage.getItem('logged_in'));
+  const [publicPost, setPublicPost] = useState(0);
   const navigate = useNavigate();
+
+  //Set post public or private on click
+  const togglePublic = (e) => {
+    e.target.checked ? setPublicPost(1) : setPublicPost(0);
+  };
 
   useEffect(() => {
     setLoggedIn(sessionStorage.getItem('logged_in'));
@@ -45,9 +51,10 @@ const Account = () => {
     formData.append('title', title);
     formData.append('content', content);
     formData.append('image', imageSrc);
+    formData.append('public_post', publicPost);
     axios
       .post('/api/account', formData)
-      .then((response) => {
+      .then((res) => {
         Swal.fire({
           icon: 'success',
           title: 'Post created successfully',
@@ -59,6 +66,7 @@ const Account = () => {
         setTitle('');
         setContent('');
         setImageSrc('');
+        setPublicPost(0);
         //Rerender posts list
         fetchPosts();
       })
@@ -120,7 +128,19 @@ const Account = () => {
               }}
             ></input>
           </div>
+          <div className="form-check">
+            <input
+              type="checkbox"
+              name="make_public"
+              className="form-check-input"
+              onClick={(e) => togglePublic(e)}
+            />
+            <label htmlFor="make_public" className="form-check-label">
+              Make the post public
+            </label>
+          </div>
           {/*........ Buttons ...........*/}
+
           <div>
             <input
               type="submit"
@@ -135,13 +155,15 @@ const Account = () => {
               className="btn btn-outline-dark"
               id="canceladd"
             >
-              Cancel
+              Reset
             </button>
           </div>
         </div>
       </form>
       {posts.map((post, key) => {
-        return <Post {...post} key={key} reload={fetchPosts} />;
+        return (
+          <Post {...post} key={key} reload={fetchPosts} username={username} />
+        );
       })}
     </div>
   );
