@@ -102,15 +102,18 @@ class BackendController extends AbstractController
     {
         $em = $doctrine->getManager();
         //Get username and password input
-        $username = ($request->request->get('username'));
-        $password = ($request->request->get('password'));
+        $username = (trim($request->request->get('username')));
+        $password = (trim($request->request->get('password')));
         //Get all users from the database
         $users = $em->getRepository(Users::class)->findAll();
         foreach($users as $user){
             //Find matching username by username
             if($user->getUsername() == $username){
                 //Get password of the matched username
-                if($user->getPassword() == $password){
+                //Compare passwords
+                $hash = $user->getPassword();
+
+                if(password_verify($password, $hash)){
                     return $this->json('Logged in successfully');
                 } else {
                     return $this->json('Password is incorrect', 403);
