@@ -1,6 +1,7 @@
 # FullStack Blog page
 
 Simple fullstack webpage created with Symfony and React.
+You can register a new user and login. Each user has a personal provite account where they can create posts.
 
 # Steps to follow
 
@@ -21,6 +22,7 @@ Simple fullstack webpage created with Symfony and React.
 5. Start Docker container SYMFONY-MAMP
 6. Visit URL: http://localhost:8007/ to see the app
 7. Use Crtl + C to stop the watch
+8. You can use username "admin" with password "admin" or username "admin2" with password "admin". Alternatively, you can register a new user.
 
 # Tech stack
 
