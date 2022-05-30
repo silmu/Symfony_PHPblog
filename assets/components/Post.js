@@ -26,7 +26,7 @@ const Post = (props) => {
         content: contentUpd,
       })
       .then((res) => {
-        console.log('Update success: ', res.data);
+        // console.log('Update success: ', res.data);
         Swal.fire({
           icon: 'success',
           title: 'Post updated successfully',
@@ -37,7 +37,7 @@ const Post = (props) => {
         reload();
       })
       .catch((err) => {
-        console.log('Update axios error: ', err);
+        // console.log('Update axios error: ', err);
         Swal.fire({
           icon: 'error',
           title: 'An error occured',
@@ -63,7 +63,7 @@ const Post = (props) => {
         axios
           .delete(`/api/account/${id}`)
           .then((res) => {
-            console.log('Delete response: ', res.data);
+            // console.log('Delete response: ', res.data);
             Swal.fire({
               icon: 'success',
               title: 'Post deleted successfully!',
@@ -73,7 +73,7 @@ const Post = (props) => {
             reload();
           })
           .catch((err) => {
-            console.log('Delete axios error: ', err);
+            // console.log('Delete axios error: ', err);
             Swal.fire({
               icon: 'error',
               title: 'An error occured',

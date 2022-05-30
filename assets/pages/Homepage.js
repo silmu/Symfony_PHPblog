@@ -14,11 +14,11 @@ const Homepage = () => {
     axios
       .get(`/api`)
       .then((response) => {
-        console.log(response.data);
+        // console.log(response.data);
         setPosts(response.data);
       })
       .catch((error) => {
-        console.log('Axios error: ', error);
+        // console.log('Axios error: ', error);
       });
   };
   return (

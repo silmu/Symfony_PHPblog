@@ -70,7 +70,7 @@ const Account = () => {
         fetchPosts();
       })
       .catch((error) => {
-        console.log('Axios error: ', error);
+        // console.log('Axios error: ', error);
         Swal.fire({
           icon: 'error',
           title: 'An error occured',

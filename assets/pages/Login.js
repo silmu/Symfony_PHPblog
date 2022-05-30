@@ -11,15 +11,15 @@ const Login = () => {
   const [loginMsg, setLoginMsg] = useState('');
   const navigate = useNavigate();
 
-  useEffect(() => {
-    console.log('Login: Logged in: ', sessionStorage.getItem('logged_in'));
-  }, []);
+  // useEffect(() => {
+  //   console.log('Login: Logged in: ', sessionStorage.getItem('logged_in'));
+  // }, []);
 
   //If logged in set session to true
   const toggleLogin = (status, username) => {
     window.sessionStorage.setItem('logged_in', status);
     window.sessionStorage.setItem('username', username);
-    console.log('Login: Logged in: ', sessionStorage.getItem('logged_in'));
+    // console.log('Login: Logged in: ', sessionStorage.getItem('logged_in'));
   };
 
   //Check if username and password are correct
@@ -33,7 +33,6 @@ const Login = () => {
       .post('/api/login_check', formData)
       .then((res) => {
         setLoginMsg(res.data);
-        console.log(res.data);
         Swal.fire({
           icon: 'success',
           title: 'Logged in successfully',
@@ -84,7 +83,7 @@ const Login = () => {
           showConfirmButton: false,
           timer: 1500,
         });
-        console.log(err.data);
+        // console.log(err.data);
         toggleLogin(false);
       });
   };
