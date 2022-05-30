@@ -94,6 +94,7 @@ const Post = (props) => {
           id == undefined ? 'hidden' : ''
         }`}
       >
+        <div className="author p-3">{username}</div>
         <img src={image} className="p-3 card-img-top" />
         <div className="card-body">
           <h3 className="card-title">{title}</h3>
@@ -110,7 +111,6 @@ const Post = (props) => {
               setContentUpd(e.target.value);
             }}
           ></textarea>
-          <div className="author">Post created by {username}</div>
           {/* Buttons are hidden on homepage */}
           {hideButtons ? (
             ''

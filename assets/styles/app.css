@@ -32,11 +32,28 @@ h2 {
   font-weight: 800 !important;
 }
 
-h4,
-.author {
+h4 {
   color: gray;
   font-size: 0.8rem !important;
   text-align: end;
+}
+
+.author {
+  font-weight: bold;
+}
+
+.author::before {
+  content: ' ';
+  width: 3rem;
+  height: 3rem;
+  margin-right: 0.5rem;
+  position: relative;
+  top: 1rem;
+  border-radius: 50%;
+  background: url('https://hockey.scoutvid.com/wp-content/themes/scoutvid-theme-video/assets/images/player-avatar.png');
+  background-size: cover;
+  /* background-color: lightgray; */
+  display: inline-block;
 }
 
 .hidden {

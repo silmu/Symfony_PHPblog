@@ -24,10 +24,9 @@ const Account = () => {
     setLoggedIn(sessionStorage.getItem('logged_in'));
     if (sessionStorage.getItem('logged_in') == 'false') {
       navigate('/login');
-      console.log('Account trying to redirect');
     }
     //Check if logged in
-    console.log('Account: Logged in:', sessionStorage.getItem('logged_in'));
+    // console.log('Account: Logged in:', sessionStorage.getItem('logged_in'));
     fetchPosts();
   }, []);
 
@@ -35,7 +34,7 @@ const Account = () => {
     axios
       .get(`/api/account/${username}`)
       .then((response) => {
-        console.log(response.data);
+        // console.log(response.data);
         setPosts(response.data);
       })
       .catch((error) => {
@@ -84,7 +83,8 @@ const Account = () => {
 
   return (
     <div>
-      <h1 className="text-center">Welcome back, {username}!</h1>
+      <h1 className="text-center">Personal page</h1>
+      <h2 className="text-center">Welcome back, {username}!</h2>
       <form id="newpost" className="p-3 mx-auto bg-white rounded card">
         <img
           src={

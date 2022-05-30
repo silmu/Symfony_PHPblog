@@ -11,6 +11,16 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+
+// session_start();
+
+// function setSession($status, $username){
+//     if($status){
+//         session_regenerate_id(true);
+//         $_SESSION['user_id'] = $username;
+//     }
+//     $_SESSION['logged_in'] = $status;
+// };
 #[Route('/api', name: 'api_main')]
 class BackendController extends AbstractController
 {
@@ -139,6 +149,7 @@ class BackendController extends AbstractController
                 //Verify password against saved hash
                 $hash = $user->getPassword();
                 if(password_verify($password, $hash)){
+                    // setSession(true, $username);
                     return $this->json('Logged in successfully');
                 } else {
                     return $this->json('Password is incorrect', 403);

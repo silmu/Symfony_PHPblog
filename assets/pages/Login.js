@@ -16,8 +16,8 @@ const Login = () => {
   }, []);
 
   //If logged in set session to true
-  const toggleLogin = (status) => {
-    window.sessionStorage.setItem('logged_in', status);
+  const toggleLogin = (username) => {
+    window.sessionStorage.setItem('logged_in', username);
     console.log('Login: Logged in: ', sessionStorage.getItem('logged_in'));
   };
 
@@ -32,6 +32,7 @@ const Login = () => {
       .post('/api/login_check', formData)
       .then((res) => {
         setLoginMsg(res.data);
+        console.log(res.data);
         Swal.fire({
           icon: 'success',
           title: 'Logged in successfully',
@@ -87,7 +88,11 @@ const Login = () => {
 
   return (
     <div className="container">
-      <form method="post" className="p-3 mx-auto bg-white rounded">
+      <form
+        method="post"
+        onSubmit={(e) => handleLoginCheck(e)}
+        className="p-3 mx-auto bg-white rounded"
+      >
         <h1>Login</h1>
         <div className="form-group">
           <label htmlFor="username"></label>
@@ -123,7 +128,6 @@ const Login = () => {
           type="submit"
           name="submit"
           value="Submit"
-          onClick={(e) => handleLoginCheck(e)}
           className="btn btn-dark"
         >
           Submit
@@ -134,7 +138,11 @@ const Login = () => {
       {/* Register */}
       <div className="register">
         <div className="register-form">
-          <form method="post" className="p-3 mx-auto bg-white rounded">
+          <form
+            method="post"
+            onSubmit={(e) => handleRegistry(e)}
+            className="p-3 mx-auto bg-white rounded"
+          >
             <h2>Register</h2>
             <div className="form-group">
               <label htmlFor="reg_username"></label>
@@ -171,7 +179,6 @@ const Login = () => {
               name="register"
               value="Submit"
               className="btn btn-dark"
-              onClick={(e) => handleRegistry(e)}
             />
           </form>
         </div>
