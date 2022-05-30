@@ -16,8 +16,9 @@ const Login = () => {
   }, []);
 
   //If logged in set session to true
-  const toggleLogin = (username) => {
-    window.sessionStorage.setItem('logged_in', username);
+  const toggleLogin = (status, username) => {
+    window.sessionStorage.setItem('logged_in', status);
+    window.sessionStorage.setItem('username', username);
     console.log('Login: Logged in: ', sessionStorage.getItem('logged_in'));
   };
 
@@ -40,8 +41,10 @@ const Login = () => {
           timer: 1500,
         });
         //If login is successful redirect to account
-        toggleLogin(true);
+        window.sessionStorage.setItem('logged_in', 'false');
+        toggleLogin(true, username);
         navigate(`/account/${username}`);
+        location.reload();
       })
       .catch((err) => {
         Swal.fire({

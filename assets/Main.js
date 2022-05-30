@@ -23,10 +23,7 @@ const Main = () => {
           <Route path="/login" element={<Login />} />
           <Route path="/logout" element={<Login />} />
           <Route path="/account/:username" element={<Account />} />
-          {/* <Route
-            path="/account"
-            element={<Navigate to={`/account/${username}`} />}
-          /> */}
+          <Route path="/account/" element={<Navigate to={`/login`} />} />
         </Routes>
       </Layout>
     </BrowserRouter>

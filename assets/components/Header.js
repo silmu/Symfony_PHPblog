@@ -3,10 +3,12 @@ import { Link } from 'react-router-dom';
 
 const Header = () => {
   const [loggedIn, setLoggedIn] = useState(sessionStorage.getItem('logged_in'));
+  const [username, setUsername] = useState(sessionStorage.getItem('username'));
 
   useEffect(() => {
     setLoggedIn(sessionStorage.getItem('logged_in'));
-  }, []);
+    setUsername(sessionStorage.getItem('username'));
+  }, [username, loggedIn]);
 
   const toggleLogin = () => {
     setLoggedIn(sessionStorage.getItem('logged_in'));
@@ -25,9 +27,9 @@ const Header = () => {
         <Link to="/" className="navbar-brand">
           BlogBook
         </Link>
-        {/* <Link to="account" className="nav-link link-light">
+        <Link to={`account/${username}`} className="nav-link link-light">
           My account
-        </Link> */}
+        </Link>
         <Link to="login" className="nav-link link-light" onClick={toggleLogin}>
           {loggedIn == 'true' ? 'Logout' : 'Login'}
         </Link>
