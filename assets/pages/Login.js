@@ -72,9 +72,12 @@ const Login = () => {
           showConfirmButton: false,
           timer: 1500,
         });
-        console.log(res.data);
-        toggleLogin(true);
+        // console.log(res.data);
+        //If login is successful redirect to account
+        window.sessionStorage.setItem('logged_in', 'false');
+        toggleLogin(true, usernameReg);
         navigate(`/account/${usernameReg}`);
+        location.reload();
       })
       .catch((err) => {
         Swal.fire({

@@ -14,7 +14,9 @@ const Header = () => {
     setLoggedIn(sessionStorage.getItem('logged_in'));
     if (loggedIn == 'true') {
       window.sessionStorage.setItem('logged_in', 'false');
+      window.sessionStorage.setItem('username', '');
       setLoggedIn('false');
+      setUsername('');
     }
   };
 
