@@ -27,7 +27,16 @@ const Account = () => {
     }
     //Check if logged in
     // console.log('Account: Logged in:', sessionStorage.getItem('logged_in'));
-    fetchPosts();
+    if (sessionStorage.getItem('username') == username) {
+      fetchPosts();
+    } else {
+      Swal.fire({
+        icon: 'error',
+        title: 'Access denied',
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    }
   }, []);
 
   const fetchPosts = () => {
@@ -81,91 +90,95 @@ const Account = () => {
       });
   };
 
-  return (
-    <div>
-      <h1 className="text-center">Personal page</h1>
-      <h2 className="text-center">Welcome back, {username}!</h2>
-      <form id="newpost" className="p-3 mx-auto bg-white rounded card">
-        <img
-          src={
-            imageSrc
-              ? imageSrc
-              : 'https://images.unsplash.com/photo-1500989145603-8e7ef71d639e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2352&q=80'
-          }
-          className="p-3 card-img-top"
-        />
-        <div className="card-body">
-          <label htmlFor="title"></label>
-          <input
-            id="title"
-            type="text"
-            name="title"
-            onChange={(e) => {
-              setTitle(e.target.value);
-            }}
-            placeholder="Title"
-            className="form-control mb-3 card-title"
-            required
-          ></input>
-          <textarea
-            className="form-control mb-1 card-text"
-            name="content"
-            onChange={(e) => {
-              setContent(e.target.value);
-            }}
-            placeholder="Share your thoughts here..."
-            required
-          ></textarea>
-          {/*........ Image as a link ...........*/}
-          <div>
-            <label htmlFor="imageInput">Add a link to an image:</label>
+  if (sessionStorage.getItem('username') == username) {
+    return (
+      <div>
+        <h1 className="text-center">Personal page</h1>
+        <h2 className="text-center">Welcome back, {username}!</h2>
+        <form id="newpost" className="p-3 mx-auto bg-white rounded card">
+          <img
+            src={
+              imageSrc
+                ? imageSrc
+                : 'https://images.unsplash.com/photo-1500989145603-8e7ef71d639e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2352&q=80'
+            }
+            className="p-3 card-img-top"
+          />
+          <div className="card-body">
+            <label htmlFor="title"></label>
             <input
+              id="title"
               type="text"
-              className="form-control p-2"
-              name="imageInput"
+              name="title"
               onChange={(e) => {
-                setImageSrc(e.target.value);
+                setTitle(e.target.value);
               }}
+              placeholder="Title"
+              className="form-control mb-3 card-title"
+              required
             ></input>
-          </div>
-          <div className="form-check">
-            <input
-              type="checkbox"
-              name="make_public"
-              className="form-check-input"
-              onClick={(e) => togglePublic(e)}
-            />
-            <label htmlFor="make_public" className="form-check-label">
-              Make the post public
-            </label>
-          </div>
-          {/*........ Buttons ...........*/}
+            <textarea
+              className="form-control mb-1 card-text"
+              name="content"
+              onChange={(e) => {
+                setContent(e.target.value);
+              }}
+              placeholder="Share your thoughts here..."
+              required
+            ></textarea>
+            {/*........ Image as a link ...........*/}
+            <div>
+              <label htmlFor="imageInput">Add a link to an image:</label>
+              <input
+                type="text"
+                className="form-control p-2"
+                name="imageInput"
+                onChange={(e) => {
+                  setImageSrc(e.target.value);
+                }}
+              ></input>
+            </div>
+            <div className="form-check">
+              <input
+                type="checkbox"
+                name="make_public"
+                className="form-check-input"
+                onClick={(e) => togglePublic(e)}
+              />
+              <label htmlFor="make_public" className="form-check-label">
+                Make the post public
+              </label>
+            </div>
+            {/*........ Buttons ...........*/}
 
-          <div>
-            <input
-              type="submit"
-              disabled={isSaving}
-              onClick={handlePost}
-              name="addpost"
-              className="btn btn-dark"
-              value="Add a new post"
-            />
-            <button
-              type="reset"
-              className="btn btn-outline-dark"
-              id="canceladd"
-            >
-              Reset
-            </button>
+            <div>
+              <input
+                type="submit"
+                disabled={isSaving}
+                onClick={handlePost}
+                name="addpost"
+                className="btn btn-dark"
+                value="Add a new post"
+              />
+              <button
+                type="reset"
+                className="btn btn-outline-dark"
+                id="canceladd"
+              >
+                Reset
+              </button>
+            </div>
           </div>
-        </div>
-      </form>
-      {posts.map((post, key) => {
-        return (
-          <Post {...post} key={key} reload={fetchPosts} username={username} />
-        );
-      })}
-    </div>
-  );
+        </form>
+        {posts.map((post, key) => {
+          return (
+            <Post {...post} key={key} reload={fetchPosts} username={username} />
+          );
+        })}
+      </div>
+    );
+  } else {
+    return <h1 className="text-center">This account is private</h1>;
+  }
 };
 export default Account;
