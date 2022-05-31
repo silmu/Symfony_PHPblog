@@ -7,7 +7,7 @@ const Header = () => {
 
   useEffect(() => {
     setLoggedIn(sessionStorage.getItem('logged_in'));
-    setUsername(sessionStorage.getItem('username'));
+    setUsername(sessionStorage.getItem('username') ?? '');
   }, [username, loggedIn]);
 
   const toggleLogin = () => {
